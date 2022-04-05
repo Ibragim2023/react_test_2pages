@@ -1,0 +1,35 @@
+.App {
+  width: 80%;
+  min-height: 500px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  margin: auto;
+  background-color: rgb(133, 124, 107);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App h1 {
+  text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(24, 22, 22);
+}
+
+.menu {
+  width: 400px;
+  padding-right: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.logo {
+  padding: 5px 0px 5px 45px;
+}
+.content {
+  margin-top: 50px;
+}
