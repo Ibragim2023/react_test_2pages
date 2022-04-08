@@ -21,7 +21,7 @@ export default function authReducer(state = initialState, action) {
 }
 
 export const logUpUser = (name, lastname, email, password) => {
-  return async (dispath) => {
+  return async (dispatch) => {
     try {
       const res = await fetch("http://localhost:3001/users", {
         method: "POST",
@@ -29,7 +29,7 @@ export const logUpUser = (name, lastname, email, password) => {
         headers: { "Content-type": "application/json" },
       });
       const user = await res.json();
-      dispath({ type: "user/add", payload: user });
+      dispatch({ type: "user/add", payload: user });
     } catch (error) {
       console.log(error);
     }
@@ -37,15 +37,17 @@ export const logUpUser = (name, lastname, email, password) => {
 };
 
 export const logInUser = (logInEmail, logInPassword) => {
-  return async (dispath) => {
+  const email = logInEmail
+  const password = logInPassword
+  return async (dispatch) => {
     try {
       const res = await fetch("http://localhost:3001/login", {
         method: "POST",
-        body: JSON.stringify({ logInEmail, logInPassword }),
+        body: JSON.stringify({ email, password }),
         headers: { "Content-type": "application/json" },
       });
       const json = await res.json();
-      dispath({ type: "user/logIn", payload: json.token });
+      dispatch({ type: "user/logIn", payload: json.token });
       localStorage.setItem("token", json.token);
     } catch (error) {
       console.log(error);

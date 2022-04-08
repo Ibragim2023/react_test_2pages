@@ -22,7 +22,15 @@ const Contacts = () => {
     );
   } else {
     return <div>
-      {JSON.stringify(contacts)}
+      <ul>
+        {contacts.map((item) => {
+          return (
+            <li>
+              {item.text}
+            </li>
+          )
+        })}
+      </ul>
     </div>;
   }
 };

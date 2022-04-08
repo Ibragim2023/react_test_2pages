@@ -18,7 +18,8 @@ export const loadContacts = () => {
   return async (dispatch) => {
     try {
       const res = await fetch("http://localhost:3001/contact");
-      const contacts = res.json();
+      const contacts = await res.json();
+      console.log(contacts);
       dispatch({ type: "contact/load", payload: contacts });
     } catch (error) {
       console.log(error);
