@@ -1,0 +1,42 @@
+span {
+    color: rgb(50, 50, 122);
+}
+
+.contact_block {
+    margin-bottom: 25px;
+    background-color: wheat;
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.text {
+    flex: 1;
+}
+
+.del_btn {
+    padding-right: 5px;
+}
+
+.del_btn button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+.update_btn {
+    padding-right: 5px;
+}
+
+.update_btn button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+.flex_block {
+    display: flex;
+    justify-content: space-around;
+}

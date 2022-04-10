@@ -3,16 +3,16 @@ import "./Auth.css";
 import { useDispatch } from "react-redux";
 import { logUpUser } from "../../redux/features/auth.reducer";
 import { logInUser } from "../../redux/features/auth.reducer";
-import { Link } from "react-router-dom";
 
 const Authorization = () => {
-  const [name, setName] = useState();
-  const [lastname, setLastname] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [logInEmail, setLogInEmail] = useState();
-  const [logInPassword, setLogInPassword] = useState();
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [logInEmail, setLogInEmail] = useState("");
+  const [logInPassword, setLogInPassword] = useState("");
   const [login, setLogin] = useState(false);
+  const [logTrue, setLogTrue] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const Authorization = () => {
   };
 
   const handleClick = () => {
-    if (name && lastname && email && password !== "") {
+    if (name !== "" && lastname !== "" && email !== "" && password !== "") {
       dispatch(logUpUser(name, lastname, email, password));
       setName("");
       setLastname("");
@@ -46,10 +46,11 @@ const Authorization = () => {
   };
 
   const handleLogInClick = () => {
-    if (logInEmail && logInPassword !== "") {
+    if (logInEmail !== "" && logInPassword !== "") {
       dispatch(logInUser(logInEmail, logInPassword));
       setLogInEmail("");
       setLogInPassword("");
+      setLogTrue(true);
     } else {
       alert("Поля авторизации не могут быть пустыми )");
     }
@@ -57,7 +58,7 @@ const Authorization = () => {
 
   const handleAuth = () => {
     setLogin(true);
-  }
+  };
 
   const handleEmailLogIn = (e) => {
     setLogInEmail(e.target.value);
@@ -104,7 +105,7 @@ const Authorization = () => {
         <button onClick={handleAuth}>Есть аккаунт</button>
       </div>
     );
-  } else {
+  } else if (login && !logTrue) {
     return (
       <div className="login">
         <div>
@@ -119,9 +120,11 @@ const Authorization = () => {
             value={logInPassword}
           />
         </div>
-        <Link to="/contacts"><button onClick={handleLogInClick}>Войти в IT</button></Link>
+        <button onClick={handleLogInClick}>Войти в IT</button>
       </div>
     );
+  } else if (logTrue) {
+    return <h2 className="center">Вы успешно авторизовались!</h2>;
   }
 };
 export default Authorization;

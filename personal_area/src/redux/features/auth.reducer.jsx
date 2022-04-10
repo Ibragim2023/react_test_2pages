@@ -54,3 +54,10 @@ export const logInUser = (logInEmail, logInPassword) => {
     }
   };
 };
+
+export const logOut = () => {
+  return async (dispatch) => {
+    localStorage.removeItem("token");
+    dispatch({type: "user/logOut"})
+  }
+}
