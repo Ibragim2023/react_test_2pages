@@ -8,7 +8,7 @@ import "./Contacts.css";
 const Contacts = () => {
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   const contacts = useSelector((state) => state.contactReducer.contacts);
 
@@ -40,7 +40,7 @@ const Contacts = () => {
 
   useEffect(() => {
     dispatch(loadContacts());
-  }, [contacts]);
+  }, [dispatch, contacts]);
 
   if (!token) {
     return (
@@ -69,6 +69,7 @@ const Contacts = () => {
           })}
         </div>
         <div className="right_block">
+          {}
           <h3>Добавление контактов :</h3>
           <div>
             <input

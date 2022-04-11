@@ -1,5 +1,5 @@
 const initialState = {
-  users: null,
+  users: [],
   token: localStorage.getItem("token"),
 };
 
@@ -8,7 +8,7 @@ export default function authReducer(state = initialState, action) {
     case "user/add":
       return {
         ...state,
-        users: action.payload,
+        users: [...state.users, action.payload],
       };
     case "user/logIn":
       return {
@@ -37,8 +37,8 @@ export const logUpUser = (name, lastname, email, password) => {
 };
 
 export const logInUser = (logInEmail, logInPassword) => {
-  const email = logInEmail
-  const password = logInPassword
+  const email = logInEmail;
+  const password = logInPassword;
   return async (dispatch) => {
     try {
       const res = await fetch("http://localhost:3001/login", {
@@ -58,6 +58,6 @@ export const logInUser = (logInEmail, logInPassword) => {
 export const logOut = () => {
   return async (dispatch) => {
     localStorage.removeItem("token");
-    dispatch({type: "user/logOut"})
-  }
-}
+    dispatch({ type: "user/logOut" });
+  };
+};
