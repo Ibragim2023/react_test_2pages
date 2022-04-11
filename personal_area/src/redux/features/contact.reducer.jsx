@@ -21,7 +21,7 @@ export default function contactReducer(state = initialState, action) {
     case "contact/add":
       return {
         ...state,
-        contacts: action.payload,
+        contacts: [...state.contacts, action.payload],
       };
     default:
       return state;

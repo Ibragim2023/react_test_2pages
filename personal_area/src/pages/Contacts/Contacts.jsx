@@ -40,7 +40,7 @@ const Contacts = () => {
 
   useEffect(() => {
     dispatch(loadContacts());
-  }, [dispatch]);
+  }, [contacts]);
 
   if (!token) {
     return (
