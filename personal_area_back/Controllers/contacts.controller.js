@@ -1,4 +1,5 @@
 const Contact = require("../Models/Contact.model");
+const jwt = require("jsonwebtoken");
 
 module.exports.contactsController = {
   getContacts: async (req, res) => {
@@ -15,6 +16,7 @@ module.exports.contactsController = {
         text: req.body.text,
         number: req.body.number,
       });
+
       res.json("Контакт успешно добавлен");
     } catch (error) {
       console.log(error);
@@ -26,17 +28,17 @@ module.exports.contactsController = {
         text: req.body.text,
         number: req.body.number,
       });
-      res.json("Контакт успешно изменен")
+      res.json("Контакт успешно изменен");
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   },
   deleteContact: async (req, res) => {
-      try {
-          await Contact.findByIdAndRemove(req.params.id)
-          res.json("Контакт успешно удален")
-      } catch (error) {
-          console.log(error);
-      }
-  }
+    try {
+      await Contact.findByIdAndRemove(req.params.id);
+      res.json("Контакт успешно удален");
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
