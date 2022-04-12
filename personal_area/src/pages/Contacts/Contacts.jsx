@@ -1,41 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadContacts } from "../../redux/features/contact.reducer";
-import { deleteContact } from "../../redux/features/contact.reducer";
-import { addContact } from "../../redux/features/contact.reducer";
+import {
+  loadContacts,
+  updateContact,
+} from "../../redux/features/contactReducer";
+import { deleteContact } from "../../redux/features/contactReducer";
+import AddContact from "../../components/AddContact";
 import "./Contacts.css";
 
 const Contacts = () => {
-  const dispatch = useDispatch();
-
   const token = localStorage.getItem("token");
 
   const contacts = useSelector((state) => state.contactReducer.contacts);
 
-  const [contact, setContact] = useState("");
+  const [update, setUpdate] = useState(false);
 
-  const [number, setNumber] = useState("");
+  const [id, setId] = useState("");
 
-  const handleNewContact = (e) => {
-    setContact(e.target.value);
+  const [editContact, setEditContact] = useState("");
+  const [editNumber, setEditNumber] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleChangeContact = (e) => {
+    setEditContact(e.target.value);
   };
 
-  const handleNewNumber = (e) => {
-    setNumber(e.target.value);
+  const handleChangeNumber = (e) => {
+    setEditNumber(e.target.value);
+  };
+
+  const handleUpdateContact = () => {
+    if (editContact !== "" && editNumber !== "") {
+      dispatch(updateContact(editContact, editNumber, id));
+      setEditContact("");
+      setEditNumber("");
+      setUpdate(false);
+    } else {
+      alert("Поля изменения контакта не могут быть пустыми :)");
+    }
+  };
+
+  const handleUpdate = (id) => {
+    setId(id);
+    setUpdate(true);
   };
 
   const handleDelete = (id) => {
     dispatch(deleteContact(id));
-  };
-
-  const handleAddContact = () => {
-    if (contact !== "" && number !== "") {
-      dispatch(addContact(contact, number));
-      setContact("");
-      setNumber("");
-    } else {
-      alert("Поля добавления контактов не могут быть пустыми :)");
-    }
   };
 
   useEffect(() => {
@@ -56,7 +68,7 @@ const Contacts = () => {
             return (
               <div key={id} className="contact_block">
                 <div className="update_btn">
-                  <button>🔧</button>
+                  <button onClick={() => handleUpdate(item._id)}>🔧</button>
                 </div>
                 <div className="text">
                   {item.text} <span>{item.number}</span>
@@ -68,30 +80,36 @@ const Contacts = () => {
             );
           })}
         </div>
-        <div className="right_block">
-          {}
-          <h3>Добавление контактов :</h3>
-          <div>
-            <input
-              onChange={handleNewContact}
-              type="text"
-              placeholder="Введите инициалы"
-              value={contact}
-            />
-          </div>
-          <br />
-          <div>
-            <input
-              onChange={handleNewNumber}
-              type="text"
-              placeholder="Введите номер"
-              value={number}
-            />
-          </div>
-          <br />
-          <div>
-            <button onClick={handleAddContact}>Добавить</button>
-          </div>
+        <div>
+          <AddContact />
+          {update ? (
+            <div>
+              <h3>Изменение контакта :</h3>
+              <div>
+                <input
+                  onChange={handleChangeContact}
+                  type="text"
+                  placeholder="Введите инициалы"
+                  value={editContact}
+                />
+              </div>
+              <br />
+              <div>
+                <input
+                  onChange={handleChangeNumber}
+                  type="text"
+                  placeholder="Введите номер"
+                  value={editNumber}
+                />
+              </div>
+              <br />
+              <div>
+                <button onClick={handleUpdateContact}>Изменить</button>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

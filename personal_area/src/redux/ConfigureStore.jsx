@@ -1,8 +1,8 @@
 import { applyMiddleware, createStore, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import authReducer from "../redux/features/auth.reducer";
-import contactReducer from "./features/contact.reducer";
+import authReducer from "../redux/features/authReducer";
+import contactReducer from "./features/contactReducer";
 
 
 const combine = combineReducers({authReducer, contactReducer})

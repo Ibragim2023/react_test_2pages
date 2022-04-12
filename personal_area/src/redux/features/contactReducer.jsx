@@ -23,6 +23,11 @@ export default function contactReducer(state = initialState, action) {
         ...state,
         contacts: [...state.contacts, action.payload],
       };
+    case "contact/update":
+      return {
+        ...state,
+        contacts: [...state.contacts, action.payload],
+      };
     default:
       return state;
   }
@@ -53,10 +58,9 @@ export const deleteContact = (id) => {
   };
 };
 
-export const addContact = (contact, number) => {
+export const addContact = (text, number) => {
   return async (dispatch) => {
     try {
-      const text = contact;
       const res = await fetch("http://localhost:3001/contact", {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -64,6 +68,22 @@ export const addContact = (contact, number) => {
       });
       const data = await res.json();
       dispatch({ type: "contact/add", payload: data });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const updateContact = (text, number, id) => {
+  return async (dispatch) => {
+    try {
+      const res = await fetch(`http://localhost:3001/contact/${id}`, {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ text, number }),
+      });
+      const data = await res.json();
+      dispatch({ type: "contact/update", payload: data });
     } catch (error) {
       console.log(error.message);
     }

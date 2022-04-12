@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Auth.css";
 import { useDispatch } from "react-redux";
-import { logUpUser } from "../../redux/features/auth.reducer";
-import { logInUser } from "../../redux/features/auth.reducer";
+import { logUpUser } from "../../redux/features/authReducer";
+import { logInUser } from "../../redux/features/authReducer";
 
 const Authorization = () => {
   const [name, setName] = useState("");
