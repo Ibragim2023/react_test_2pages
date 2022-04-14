@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+Данное приложение с небольшим функционалом позволяет нам: зарегистрироваться, авторизоваться, управлять списком контактов, т.е редактирование, удаление, добавление. Также есть поле поиска контактов. Напомню, что управлять списком контактов можно только после авторизации.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
