@@ -1,5 +1,7 @@
 const initialState = {
   contacts: [],
+  findContacts: [],
+  find: false,
 };
 
 export default function contactReducer(state = initialState, action) {
@@ -28,6 +30,17 @@ export default function contactReducer(state = initialState, action) {
         ...state,
         contacts: [...state.contacts, action.payload],
       };
+    case "contact/find":
+      return {
+        ...state,
+        findContacts: action.payload,
+        find: true,
+      };
+      case "contact/stopFind":
+        return {
+          ...state,
+          find: false,
+        }
     default:
       return state;
   }
@@ -84,6 +97,26 @@ export const updateContact = (text, number, id) => {
       });
       const data = await res.json();
       dispatch({ type: "contact/update", payload: data });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getFindContact = (text) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "contact/find", payload: text });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const stopfind = () => {
+  return (dispatch) => {
+    try {
+      dispatch({ type: "contact/stopFind" });
     } catch (error) {
       console.log(error.message);
     }
