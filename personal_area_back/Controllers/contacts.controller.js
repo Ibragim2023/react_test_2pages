@@ -1,6 +1,4 @@
 const Contact = require("../Models/Contact.model");
-const jwt = require("jsonwebtoken");
-
 module.exports.contactsController = {
   getContacts: async (req, res) => {
     try {
@@ -12,33 +10,39 @@ module.exports.contactsController = {
   },
   postContact: async (req, res) => {
     try {
-      await Contact.create({
-        text: req.body.text,
-        number: req.body.number,
+      const { text, number } = req.body;
+      const contact = await Contact.create({
+        text: text,
+        number: number,
+        userId: req.user.id,
       });
-
-      res.json("Контакт успешно добавлен");
+      res.json(contact);
     } catch (error) {
       console.log(error);
     }
   },
   updateContact: async (req, res) => {
     try {
-      await Contact.findByIdAndUpdate(req.params.id, {
-        text: req.body.text,
-        number: req.body.number,
+      const { text, number } = req.body;
+      const contact = await Contact.findByIdAndUpdate(req.params.id, {
+        text: text,
+        number: number,
       });
-      res.json("Контакт успешно изменен");
+      if (req.user.id === contact.userId.toString()) {
+        res.json("Контакт успешно изменен");
+      }
     } catch (error) {
-      console.log(error);
+      res.status(401).json("Нет доступа к такой операции");
     }
   },
   deleteContact: async (req, res) => {
     try {
-      await Contact.findByIdAndRemove(req.params.id);
-      res.json("Контакт успешно удален");
+      const contact = await Contact.findByIdAndRemove(req.params.id);
+      if (req.user.id === contact.userId.toString()) {
+        res.json("Контакт успешно удален");
+      }
     } catch (error) {
-      console.log(error);
+      res.status(401).json("Нет доступа к такой операции");
     }
   },
 };

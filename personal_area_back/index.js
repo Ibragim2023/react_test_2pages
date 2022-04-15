@@ -16,7 +16,7 @@ const connect = async () => {
     );
     console.log("Успешное соединение с MongoDB");
 
-    app.listen(3001, () => {
+    app.listen(3005, () => {
       console.log("Сервер успешно запущен");
     });
   } catch (error) {

@@ -7,7 +7,10 @@ const contactSchema = mongoose.Schema({
   },
   number: {
     type: String,
-    required: true,
+  },
+  userId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
   },
 });
 

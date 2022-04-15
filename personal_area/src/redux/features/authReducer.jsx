@@ -23,7 +23,7 @@ export default function authReducer(state = initialState, action) {
 export const logUpUser = (name, lastname, email, password) => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:3001/users", {
+      const res = await fetch("http://localhost:3005/users", {
         method: "POST",
         body: JSON.stringify({ name, lastname, email, password }),
         headers: { "Content-type": "application/json" },
@@ -41,7 +41,7 @@ export const logInUser = (logInEmail, logInPassword) => {
   const password = logInPassword;
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:3001/login", {
+      const res = await fetch("http://localhost:3005/login", {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-type": "application/json" },

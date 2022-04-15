@@ -49,7 +49,7 @@ export default function contactReducer(state = initialState, action) {
 export const loadContacts = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:3001/contact");
+      const res = await fetch("http://localhost:3005/contact");
       const contacts = await res.json();
       dispatch({ type: "contact/load", payload: contacts });
     } catch (error) {
@@ -61,7 +61,7 @@ export const loadContacts = () => {
 export const deleteContact = (id) => {
   return async (dispatch) => {
     try {
-      await fetch(`http://localhost:3001/contact/${id}`, {
+      await fetch(`http://localhost:3005/contact/${id}`, {
         method: "DELETE",
       });
       dispatch({ type: "contact/delete", payload: id });
@@ -74,7 +74,7 @@ export const deleteContact = (id) => {
 export const addContact = (text, number) => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:3001/contact", {
+      const res = await fetch("http://localhost:3005/contact", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ text, number }),
@@ -90,7 +90,7 @@ export const addContact = (text, number) => {
 export const updateContact = (text, number, id) => {
   return async (dispatch) => {
     try {
-      const res = await fetch(`http://localhost:3001/contact/${id}`, {
+      const res = await fetch(`http://localhost:3005/contact/${id}`, {
         method: "PATCH",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ text, number }),
