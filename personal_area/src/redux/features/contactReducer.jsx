@@ -36,11 +36,11 @@ export default function contactReducer(state = initialState, action) {
         findContacts: action.payload,
         find: true,
       };
-      case "contact/stopFind":
-        return {
-          ...state,
-          find: false,
-        }
+    case "contact/stopFind":
+      return {
+        ...state,
+        find: false,
+      };
     default:
       return state;
   }
@@ -49,7 +49,9 @@ export default function contactReducer(state = initialState, action) {
 export const loadContacts = () => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:3005/contact");
+      const res = await fetch("http://localhost:3005/contact", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
       const contacts = await res.json();
       dispatch({ type: "contact/load", payload: contacts });
     } catch (error) {
@@ -63,6 +65,7 @@ export const deleteContact = (id) => {
     try {
       await fetch(`http://localhost:3005/contact/${id}`, {
         method: "DELETE",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       dispatch({ type: "contact/delete", payload: id });
     } catch (error) {
@@ -76,7 +79,10 @@ export const addContact = (text, number) => {
     try {
       const res = await fetch("http://localhost:3005/contact", {
         method: "POST",
-        headers: { "Content-type": "application/json" },
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         body: JSON.stringify({ text, number }),
       });
       const data = await res.json();
@@ -92,7 +98,10 @@ export const updateContact = (text, number, id) => {
     try {
       const res = await fetch(`http://localhost:3005/contact/${id}`, {
         method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         body: JSON.stringify({ text, number }),
       });
       const data = await res.json();
