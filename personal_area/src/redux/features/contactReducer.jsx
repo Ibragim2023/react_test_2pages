@@ -2,7 +2,11 @@ const initialState = {
   contacts: [],
   findContacts: [],
   find: false,
+  idToUpdate: null,
+  changed: false,
 };
+
+const token = `Bearer ${localStorage.getItem("token")}`;
 
 export default function contactReducer(state = initialState, action) {
   switch (action.type) {
@@ -28,7 +32,7 @@ export default function contactReducer(state = initialState, action) {
     case "contact/update":
       return {
         ...state,
-        contacts: [...state.contacts, action.payload],
+        contacts: [action.payload],
       };
     case "contact/find":
       return {
@@ -41,6 +45,21 @@ export default function contactReducer(state = initialState, action) {
         ...state,
         find: false,
       };
+    case "contact/getIdToUpdate":
+      return {
+        ...state,
+        idToUpdate: action.payload,
+      };
+    case "contact/changed":
+      return {
+        ...state,
+        changed: false,
+      };
+    case "contact/changing":
+      return {
+        ...state,
+        changed: true,
+      };
     default:
       return state;
   }
@@ -50,7 +69,7 @@ export const loadContacts = () => {
   return async (dispatch) => {
     try {
       const res = await fetch("http://localhost:3005/contact", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: token },
       });
       const contacts = await res.json();
       dispatch({ type: "contact/load", payload: contacts });
@@ -65,7 +84,7 @@ export const deleteContact = (id) => {
     try {
       await fetch(`http://localhost:3005/contact/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: token },
       });
       dispatch({ type: "contact/delete", payload: id });
     } catch (error) {
@@ -81,7 +100,7 @@ export const addContact = (text, number) => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: token,
         },
         body: JSON.stringify({ text, number }),
       });
@@ -100,7 +119,7 @@ export const updateContact = (text, number, id) => {
         method: "PATCH",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: token,
         },
         body: JSON.stringify({ text, number }),
       });
@@ -126,6 +145,36 @@ export const stopfind = () => {
   return (dispatch) => {
     try {
       dispatch({ type: "contact/stopFind" });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getIdToUpdate = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "contact/getIdToUpdate", payload: id });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const changingContact = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "contact/changing" });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const changedContact = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "contact/changed" });
     } catch (error) {
       console.log(error.message);
     }

@@ -1,65 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  loadContacts,
-  updateContact,
-} from "../../redux/features/contactReducer";
-import { deleteContact } from "../../redux/features/contactReducer";
-import AddContact from "../../components/AddContact";
+import { loadContacts } from "../../redux/features/contactReducer";
+import AddContact from "../../components/AddContact/AddContact";
 import "./Contacts.css";
-import SearchContact from "../../components/SearchContact";
+import SearchContact from "../../components/SearchContact/SearchContact";
+import ChangeContact from "../../components/ChangeContact/ChangeContact";
+import MapContact from "../../components/MapContacts/MapContact";
+import MapFindContact from "../../components/MapFindContacts/MapFindContact";
 
 const Contacts = () => {
   const token = localStorage.getItem("token");
-
   const contacts = useSelector((state) => state.contactReducer.contacts);
-  const findContacts = useSelector(
-    (state) => state.contactReducer.findContacts
-  );
-
-  const [update, setUpdate] = useState(false);
-
-  const [id, setId] = useState("");
-
-  const [editContact, setEditContact] = useState("");
-  const [editNumber, setEditNumber] = useState("");
-
   const find = useSelector((state) => state.contactReducer.find);
-
+  const changed = useSelector((state) => state.contactReducer.changed);
   const dispatch = useDispatch();
-
-  const handleChangeContact = (e) => {
-    setEditContact(e.target.value);
-  };
-
-  const handleChangeNumber = (e) => {
-    setEditNumber(e.target.value);
-  };
-
-  const handleUpdateContact = () => {
-    if (editContact !== "" && editNumber !== "") {
-      dispatch(updateContact(editContact, editNumber, id));
-      setEditContact("");
-      setEditNumber("");
-      setUpdate(false);
-    } else {
-      alert("Поля изменения контакта не могут быть пустыми :)");
-    }
-  };
-
-  const handleUpdate = (id) => {
-    setId(id);
-    setUpdate(true);
-  };
-
-  const handleDelete = (id) => {
-    dispatch(deleteContact(id));
-  };
-
   useEffect(() => {
     dispatch(loadContacts());
   }, [dispatch, contacts]);
-
   if (!token) {
     return (
       <div>
@@ -72,76 +29,10 @@ const Contacts = () => {
         <SearchContact />
         <div className="flex_block">
           <div className="left_block">
-            {!find
-              ? contacts.map((item, id) => {
-                  return (
-                    <div key={id} className="contact_block">
-                      <div className="update_btn">
-                        <button onClick={() => handleUpdate(item._id)}>
-                          🔧
-                        </button>
-                      </div>
-                      <div className="text">
-                        {item.text} <span>{item.number}</span>
-                      </div>
-                      <div className="del_btn">
-                        <button onClick={() => handleDelete(item._id)}>
-                          ✖
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })
-              : findContacts.map((item, id) => {
-                  return (
-                    <div key={id} className="contact_block">
-                      <div className="update_btn">
-                        <button onClick={() => handleUpdate(item._id)}>
-                          🔧
-                        </button>
-                      </div>
-                      <div className="text">
-                        {item.text} <span>{item.number}</span>
-                      </div>
-                      <div className="del_btn">
-                        <button onClick={() => handleDelete(item._id)}>
-                          ✖
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
+            {!find ? <MapContact /> : <MapFindContact />}
           </div>
-          <div>
-            <AddContact />
-            {update ? (
-              <div>
-                <h3>Изменение контакта :</h3>
-                <div>
-                  <input
-                    onChange={handleChangeContact}
-                    type="text"
-                    placeholder="Введите инициалы"
-                    value={editContact}
-                  />
-                </div>
-                <br />
-                <div>
-                  <input
-                    onChange={handleChangeNumber}
-                    type="text"
-                    placeholder="Введите номер"
-                    value={editNumber}
-                  />
-                </div>
-                <br />
-                <div>
-                  <button onClick={handleUpdateContact}>Изменить</button>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
+          <div className="right_block">
+            {!changed ? <AddContact /> : <ChangeContact />}
           </div>
         </div>
       </div>

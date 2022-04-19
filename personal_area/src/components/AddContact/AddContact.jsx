@@ -1,5 +1,5 @@
 import React from "react";
-import { addContact } from "../redux/features/contactReducer";
+import { addContact } from "../../redux/features/contactReducer";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -28,7 +28,7 @@ const AddContact = () => {
   };
 
   return (
-    <div className="right_block">
+    <div>
       <h3>Добавление контакта :</h3>
       <div>
         <input

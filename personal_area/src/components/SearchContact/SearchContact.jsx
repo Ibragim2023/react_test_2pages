@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFindContact } from "../redux/features/contactReducer";
-import { stopfind } from "../redux/features/contactReducer";
+import { getFindContact } from "../../redux/features/contactReducer";
+import { stopfind } from "../../redux/features/contactReducer";
 import "./SearchContact.css";
 
 const SearchContact = () => {
@@ -24,6 +24,7 @@ const SearchContact = () => {
 
   const stopSearch = () => {
     dispatch(stopfind());
+    setSearch("")
   };
 
   return (
