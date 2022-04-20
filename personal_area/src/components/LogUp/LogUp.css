@@ -1,0 +1,11 @@
+.flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.main button {
+    margin: 20px 10px 0px;
+    cursor: pointer;
+}
+

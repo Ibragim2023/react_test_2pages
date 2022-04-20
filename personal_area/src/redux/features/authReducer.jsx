@@ -1,6 +1,7 @@
 const initialState = {
   users: [],
   token: localStorage.getItem("token"),
+  login: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -15,6 +16,16 @@ export default function authReducer(state = initialState, action) {
         ...state,
         token: action.payload,
       };
+    case "auth/logIn":
+      return {
+        ...state,
+        login: true,
+      };
+      case "auth/stopLogIn":
+        return {
+          ...state,
+          login: false,
+        }
     default:
       return state;
   }
@@ -59,5 +70,25 @@ export const logOut = () => {
   return async (dispatch) => {
     localStorage.removeItem("token");
     dispatch({ type: "user/logOut" });
+  };
+};
+
+export const logIn = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "auth/logIn" });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const stopLogIn = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "auth/stopLogIn" });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 };

@@ -1,22 +1,7 @@
-.flex {
-  display: flex;
-  justify-content: space-around;
-}
-
 .authMain {
   width: 400px;
   margin: auto;
   text-align: center;
-}
-
-.authMain button {
-  width: 100px;
-  height: 25px;
-  margin-top: 25px;
-}
-
-.authMain h3 {
-    text-align: left;
 }
 
 .login {
@@ -25,10 +10,6 @@
   text-align: center;
 }
 
-.login button {
-  margin-top: 20px;
-}
-
-.center {
+h3 {
   text-align: center;
 }

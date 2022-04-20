@@ -59,7 +59,7 @@ const ChangeContact = () => {
       <br />
       <div>
         <button className="mrgn_right" onClick={handleUpdateContact}>Изменить</button>
-        <button onClick={handleStopChange}>Сброс</button>
+        <button onClick={handleStopChange}>Отменить</button>
       </div>
     </div>
   );
