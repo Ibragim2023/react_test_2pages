@@ -10,8 +10,8 @@ const getHeaders = () => {
   return {
     "Content-type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`,
-  }
-}
+  };
+};
 
 export default function contactReducer(state = initialState, action) {
   switch (action.type) {
